@@ -54,6 +54,11 @@ public class GrupoUsuarioCadastrar extends javax.swing.JFrame {
 
         btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cancelar.png"))); // NOI18N
         btnFechar.setText("Fechar");
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,17 +101,25 @@ public class GrupoUsuarioCadastrar extends javax.swing.JFrame {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
-        GrupoUsuario grupo = new GrupoUsuario();
-        grupo.setNomeGrupo(jtfGrupoUsuario.getText());
-        try{
-            GrupoUsuarioDao grupoMethods = new GrupoUsuarioDao();
-            grupoMethods.inserir(grupo);
-            JOptionPane.showMessageDialog(this, "Grupo Cadastrado");
-            jtfGrupoUsuario.setText("");     
-        }catch(Exception ex){
-             JOptionPane.showMessageDialog(this, "Usuario Falhou .\n" + ex.getMessage());
+        if (!(jtfGrupoUsuario.getText().isBlank())) {
+            GrupoUsuario grupo = new GrupoUsuario();
+            grupo.setNomeGrupo(jtfGrupoUsuario.getText());
+            try{
+                GrupoUsuarioDao grupoMethods = new GrupoUsuarioDao();
+                grupoMethods.inserir(grupo);
+                JOptionPane.showMessageDialog(this, "Grupo Cadastrado");
+                jtfGrupoUsuario.setText("");     
+            }catch(Exception ex){
+                 JOptionPane.showMessageDialog(this, "Usuario Falhou .\n" + ex.getMessage());
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "O campo deve conter ao menos 1 caractere.");
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnFecharActionPerformed
 
     /**
      * @param args the command line arguments

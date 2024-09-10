@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package modelo;
-import java.time.LocalDateTime;
+
 public class Usuario {
     private int id;
     private String nome;

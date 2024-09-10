@@ -4,6 +4,12 @@
  */
 package visao;
 
+
+import controlador.ProdutoDao;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.Produto;
 /**
  *
  * @author Aluno
@@ -15,6 +21,7 @@ public class ProdutoGerenciar extends javax.swing.JFrame {
      */
     public ProdutoGerenciar() {
         initComponents();
+        jtfPesquisaKeyReleased(null);
     }
 
     /**
@@ -44,8 +51,19 @@ public class ProdutoGerenciar extends javax.swing.JFrame {
 
         btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add.png"))); // NOI18N
         btnNovo.setText("Novo");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("Pesquisar por Nome: ");
+
+        jtfPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfPesquisaKeyReleased(evt);
+            }
+        });
 
         jtbProduto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -66,6 +84,11 @@ public class ProdutoGerenciar extends javax.swing.JFrame {
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/excluir.png"))); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alterar.png"))); // NOI18N
         btnAlterar.setText("Alterar");
@@ -123,6 +146,49 @@ public class ProdutoGerenciar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jtfPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPesquisaKeyReleased
+        String campoPesquisa = jtfPesquisa.getText();        
+        
+        DefaultTableModel modelo = (DefaultTableModel) jtbProduto.getModel();
+        modelo.setNumRows(0); // limpa os campos
+        
+        try{
+            ProdutoDao dao = new ProdutoDao();
+            List<Produto> lista = dao.buscar(campoPesquisa);
+            
+            for (Produto produto : lista){
+                String[] linhadaTabela = {
+                    String.valueOf(produto.getId()),
+                    produto.getNomeProduto(),
+                    produto.getUnidadeDeMedida()
+                };
+                modelo.addRow(linhadaTabela); // adiciona uma linha na tabela
+                
+            }
+            
+        } catch (Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Erro ao pesquisar: " + e.getMessage());
+            
+        } 
+    }//GEN-LAST:event_jtfPesquisaKeyReleased
+
+    private  void cadastrar(){
+        ProdutoCadastrar pc = new ProdutoCadastrar();
+        pc.setVisible(true);
+    }
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        cadastrar();
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int linhaSelecionada = jtbProduto.getSelectedRow();
+        
+        if (linhaSelecionada != -1) {
+            JOptionPane.showMessageDialog(null, "Esse registro será excluido futuramente");
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments

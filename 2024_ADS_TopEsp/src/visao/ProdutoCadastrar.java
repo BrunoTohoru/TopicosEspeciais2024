@@ -4,6 +4,10 @@
  */
 package visao;
 
+import controlador.ProdutoDao;
+import javax.swing.JOptionPane;
+import modelo.Produto;
+
 /**
  *
  * @author Aluno
@@ -46,9 +50,19 @@ public class ProdutoCadastrar extends javax.swing.JFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add.png"))); // NOI18N
         jButton1.setText("Cadastrar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cancelar.png"))); // NOI18N
         jButton2.setText("Fechar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -98,6 +112,33 @@ public class ProdutoCadastrar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (!(jtfNomeProduto.getText().isBlank())) {
+            if (!(jtfUnidadeMed.getText().isBlank())) {
+                Produto prod = new Produto();
+                prod.setNomeProduto(jtfNomeProduto.getText());
+                prod.setUnidadeDeMedida(jtfUnidadeMed.getText());
+                try{
+                    ProdutoDao produtoMethods = new ProdutoDao();
+                    produtoMethods.inserir(prod);
+                    JOptionPane.showMessageDialog(this, "Produto Cadastrado");
+                    jtfNomeProduto.setText("");
+                    jtfUnidadeMed.setText("");
+                } catch (Exception ex){
+                    JOptionPane.showMessageDialog(this, "Produto Falhou .\n" + ex.getMessage());
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "O campo Email deve conter ao menos 1 caractere.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "O campo Nome deve conter ao menos 1 caractere.");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

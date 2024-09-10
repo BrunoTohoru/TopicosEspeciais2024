@@ -4,6 +4,10 @@
  */
 package visao;
 
+import controlador.ProdutoCategoriaDao;
+import javax.swing.JOptionPane;
+import modelo.ProdutoCategoria;
+
 /**
  *
  * @author Aluno
@@ -42,9 +46,19 @@ public class CategoriaProdutoCadastrar extends javax.swing.JFrame {
 
         btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add.png"))); // NOI18N
         btnCadastrar.setText("Cadastrar");
+        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarActionPerformed(evt);
+            }
+        });
 
         btnFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cancelar.png"))); // NOI18N
         btnFechar.setText("Fechar");
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -83,6 +97,27 @@ public class CategoriaProdutoCadastrar extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        if (!(jtfCategoriaProduto.getText().isBlank())) {
+            ProdutoCategoria categoria = new ProdutoCategoria();
+            categoria.setNomeCategoria(jtfCategoriaProduto.getText());
+            try{
+                ProdutoCategoriaDao grupoMethods = new ProdutoCategoriaDao();
+                grupoMethods.inserir(categoria);
+                JOptionPane.showMessageDialog(this, "Categoria Cadastrado");
+                jtfCategoriaProduto.setText("");     
+            }catch(Exception ex){
+                 JOptionPane.showMessageDialog(this, "Categoria Falhou .\n" + ex.getMessage());
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "O campo Senha deve conter ao menos 1 caractere.");
+        }
+    }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnFecharActionPerformed
 
     /**
      * @param args the command line arguments
