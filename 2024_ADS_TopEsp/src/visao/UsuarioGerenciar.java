@@ -183,7 +183,11 @@ public class UsuarioGerenciar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // TODO add your handling code here:
+        int linhaSelecionada = jtbUsuario.getSelectedRow();
+        
+        if (linhaSelecionada != -1) {
+            JOptionPane.showMessageDialog(null, "Esse registro será excluido futuramente");
+        }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed

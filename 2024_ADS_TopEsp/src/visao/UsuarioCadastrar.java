@@ -40,8 +40,6 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
         jpfSenha = new javax.swing.JPasswordField();
         jButtonCadastrar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jcbGrupo = new javax.swing.JComboBox<>();
-        jlGrupo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastrar Usuario");
@@ -74,15 +72,11 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/cancelar.png"))); // NOI18N
         jButton2.setText("Fechar");
         jButton2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-
-        jcbGrupo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jcbGrupo.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbGrupoActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
-
-        jlGrupo.setText("Grupo de Usuario");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,11 +104,7 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jlGrupo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jcbGrupo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -142,10 +132,6 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jpfSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jlGrupo)
-                            .addComponent(jcbGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
@@ -155,36 +141,41 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
 
     private void jButtonCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCadastrarActionPerformed
         // TODO add your handling code here:
-        Usuario user = new Usuario();
-        user.setNome(jtfNome.getText());
-        user.setEmail(jtfEmail.getText());
-        user.setSenha(new String(jpfSenha.getPassword()));
-        try{
-            UsuarioDao usuarioMethods = new UsuarioDao();
-            usuarioMethods.inserir(user);
-            JOptionPane.showMessageDialog(this, "Usuario Cadastrado");
-            jtfNome.setText("");
-            jtfEmail.setText("");
-            jpfSenha.setText("");
-            } catch (Exception ex){
-                JOptionPane.showMessageDialog(this, "Usuario Falhou .\n" + ex.getMessage());
+        if (!(jtfNome.getText().isBlank())) {
+            if (!(jtfEmail.getText().isBlank())) {
+                if ((jpfSenha.getPassword().length) != 0) {
+                    Usuario user = new Usuario();
+                    user.setNome(jtfNome.getText());
+                    user.setEmail(jtfEmail.getText());
+                    user.setSenha(new String(jpfSenha.getPassword()));
+                    try{
+                        UsuarioDao usuarioMethods = new UsuarioDao();
+                        usuarioMethods.inserir(user);
+                        JOptionPane.showMessageDialog(this, "Usuario Cadastrado");
+                        jtfNome.setText("");
+                        jtfEmail.setText("");
+                        jpfSenha.setText("");
+                    } catch (Exception ex){
+                        JOptionPane.showMessageDialog(this, "Usuario Falhou .\n" + ex.getMessage());
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "O campo Senha deve conter ao menos 1 caractere.");
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "O campo Email deve conter ao menos 1 caractere.");
             }
+        }else{
+            JOptionPane.showMessageDialog(null, "O campo Nome deve conter ao menos 1 caractere.");
+        }
     }//GEN-LAST:event_jButtonCadastrarActionPerformed
 
     private void jpfSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jpfSenhaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jpfSenhaActionPerformed
 
-    private void jcbGrupoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbGrupoActionPerformed
-        // TODO add your handling code here:
-        DefaultComboBoxModel comboModel = (DefaultComboBoxModel) jcbGrupo.getModel();
-        comboModel.setSelectedItem(0);
-        try{
-            
-        } catch(Exception e){
-            
-        }
-    }//GEN-LAST:event_jcbGrupoActionPerformed
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,8 +219,6 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JComboBox<String> jcbGrupo;
-    private javax.swing.JLabel jlGrupo;
     private javax.swing.JPasswordField jpfSenha;
     private javax.swing.JTextField jtfEmail;
     private javax.swing.JTextField jtfNome;
