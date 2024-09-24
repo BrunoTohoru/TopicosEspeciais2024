@@ -183,10 +183,24 @@ public class UsuarioGerenciar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        int linhaSelecionada = jtbUsuario.getSelectedRow();
         
-        if (linhaSelecionada != -1) {
-            JOptionPane.showMessageDialog(null, "Esse registro será excluido futuramente");
+        Integer linhaSelecionada = jtbUsuario.getSelectedRow();
+        if(!(linhaSelecionada == -1)){
+            int opcao = JOptionPane.showConfirmDialog(this, "Confirma exclusão?", "Excluir", JOptionPane.YES_NO_OPTION);
+            if (opcao == JOptionPane.YES_OPTION){
+                int id = Integer.parseInt(jtbUsuario.getModel().getValueAt(linhaSelecionada, 0).toString());
+                try{
+                    UsuarioDao dao = new UsuarioDao();
+                    dao.excluir(id);
+                    DefaultTableModel modelo = (DefaultTableModel) jtbUsuario.getModel();
+                    modelo.removeRow(linhaSelecionada);
+                    JOptionPane.showMessageDialog(this, "Registro excluido com sucesso!");
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        }else{
+            JOptionPane.showMessageDialog(this, "Você deve selecionar um registro para excluir.");
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 
