@@ -44,6 +44,12 @@ public class CategoriaProdutoCadastrar extends javax.swing.JFrame {
 
         jLabel2.setText("Categoria de Produto:");
 
+        jtfCategoriaProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfCategoriaProdutoActionPerformed(evt);
+            }
+        });
+
         btnCadastrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add.png"))); // NOI18N
         btnCadastrar.setText("Cadastrar");
         btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
@@ -102,15 +108,15 @@ public class CategoriaProdutoCadastrar extends javax.swing.JFrame {
         if (!(jtfCategoriaProduto.getText().isBlank())) {
             ProdutoCategoria categoria = new ProdutoCategoria();
             categoria.setNomeCategoria(jtfCategoriaProduto.getText());
-            try{
+            try {
                 ProdutoCategoriaDao grupoMethods = new ProdutoCategoriaDao();
                 grupoMethods.inserir(categoria);
                 JOptionPane.showMessageDialog(this, "Categoria Cadastrado");
-                jtfCategoriaProduto.setText("");     
-            }catch(Exception ex){
-                 JOptionPane.showMessageDialog(this, "Categoria Falhou .\n" + ex.getMessage());
+                jtfCategoriaProduto.setText("");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Categoria Falhou .\n" + ex.getMessage());
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "O campo Senha deve conter ao menos 1 caractere.");
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed
@@ -118,6 +124,10 @@ public class CategoriaProdutoCadastrar extends javax.swing.JFrame {
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         dispose();
     }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void jtfCategoriaProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCategoriaProdutoActionPerformed
+
+    }//GEN-LAST:event_jtfCategoriaProdutoActionPerformed
 
     /**
      * @param args the command line arguments

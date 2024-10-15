@@ -9,6 +9,7 @@ package modelo;
  * @author Douglas Sugano
  */
 public class ProdutoCategoria {
+
     private int id;
     private String nomeCategoria;
 
@@ -27,6 +28,5 @@ public class ProdutoCategoria {
     public void setNomeCategoria(String nomeCategoria) {
         this.nomeCategoria = nomeCategoria;
     }
-    
-    
+
 }

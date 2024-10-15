@@ -119,19 +119,19 @@ public class ProdutoCadastrar extends javax.swing.JFrame {
                 Produto prod = new Produto();
                 prod.setNomeProduto(jtfNomeProduto.getText());
                 prod.setUnidadeDeMedida(jtfUnidadeMed.getText());
-                try{
+                try {
                     ProdutoDao produtoMethods = new ProdutoDao();
                     produtoMethods.inserir(prod);
                     JOptionPane.showMessageDialog(this, "Produto Cadastrado");
                     jtfNomeProduto.setText("");
                     jtfUnidadeMed.setText("");
-                } catch (Exception ex){
+                } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Produto Falhou .\n" + ex.getMessage());
                 }
-            }else{
-                JOptionPane.showMessageDialog(null, "O campo Email deve conter ao menos 1 caractere.");
+            } else {
+                JOptionPane.showMessageDialog(null, "O campo Unidade de medido (UN) deve conter ao menos 1 caractere.");
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "O campo Nome deve conter ao menos 1 caractere.");
         }
     }//GEN-LAST:event_jButton1ActionPerformed

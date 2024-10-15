@@ -4,12 +4,12 @@
  */
 package visao;
 
-
 import controlador.ProdutoDao;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.Produto;
+
 /**
  *
  * @author Aluno
@@ -148,33 +148,33 @@ public class ProdutoGerenciar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtfPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPesquisaKeyReleased
-        String campoPesquisa = jtfPesquisa.getText();        
-        
+        String campoPesquisa = jtfPesquisa.getText();
+
         DefaultTableModel modelo = (DefaultTableModel) jtbProduto.getModel();
         modelo.setNumRows(0); // limpa os campos
-        
-        try{
+
+        try {
             ProdutoDao dao = new ProdutoDao();
             List<Produto> lista = dao.buscar(campoPesquisa);
-            
-            for (Produto produto : lista){
+
+            for (Produto produto : lista) {
                 String[] linhadaTabela = {
                     String.valueOf(produto.getId()),
                     produto.getNomeProduto(),
                     produto.getUnidadeDeMedida()
                 };
                 modelo.addRow(linhadaTabela); // adiciona uma linha na tabela
-                
+
             }
-            
-        } catch (Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Erro ao pesquisar: " + e.getMessage());
-            
-        } 
+
+        }
     }//GEN-LAST:event_jtfPesquisaKeyReleased
 
-    private  void cadastrar(){
+    private void cadastrar() {
         ProdutoCadastrar pc = new ProdutoCadastrar();
         pc.setVisible(true);
     }
@@ -183,10 +183,23 @@ public class ProdutoGerenciar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        int linhaSelecionada = jtbProduto.getSelectedRow();
-        
-        if (linhaSelecionada != -1) {
-            JOptionPane.showMessageDialog(null, "Esse registro será excluido futuramente");
+        Integer linhaSelecionada = jtbProduto.getSelectedRow();
+        if (!(linhaSelecionada == -1)) {
+            int opcao = JOptionPane.showConfirmDialog(this, "Confirma exclusão?", "Excluir", JOptionPane.YES_NO_OPTION);
+            if (opcao == JOptionPane.YES_OPTION) {
+                int id = Integer.parseInt(jtbProduto.getModel().getValueAt(linhaSelecionada, 0).toString());
+                try {
+                    ProdutoDao dao = new ProdutoDao();
+                    dao.excluir(id);
+                    DefaultTableModel modelo = (DefaultTableModel) jtbProduto.getModel();
+                    modelo.removeRow(linhaSelecionada);
+                    JOptionPane.showMessageDialog(this, "Registro excluido com sucesso!");
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Você deve selecionar um registro para excluir.");
         }
     }//GEN-LAST:event_btnExcluirActionPerformed
 

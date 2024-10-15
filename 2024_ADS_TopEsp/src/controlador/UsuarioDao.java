@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import modelo.Usuario;
 
 //todo DAO faz as transações de BD. Este DAO é o usuario. Logo, fará apenas transações com a tabela usuario;
@@ -55,7 +54,7 @@ public class UsuarioDao {
         return lista;
     }
 
-    public void excluir(int id) throws Exception{
+    public void excluir(int id) throws Exception {
         String sql = "DELETE FROM usuario WHERE id = ?";
         Connection conexao = Conexao.getConexao();
         try (PreparedStatement ps = conexao.prepareStatement(sql)) {

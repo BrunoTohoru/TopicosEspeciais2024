@@ -104,15 +104,15 @@ public class GrupoUsuarioCadastrar extends javax.swing.JFrame {
         if (!(jtfGrupoUsuario.getText().isBlank())) {
             GrupoUsuario grupo = new GrupoUsuario();
             grupo.setNomeGrupo(jtfGrupoUsuario.getText());
-            try{
+            try {
                 GrupoUsuarioDao grupoMethods = new GrupoUsuarioDao();
                 grupoMethods.inserir(grupo);
                 JOptionPane.showMessageDialog(this, "Grupo Cadastrado");
-                jtfGrupoUsuario.setText("");     
-            }catch(Exception ex){
-                 JOptionPane.showMessageDialog(this, "Usuario Falhou .\n" + ex.getMessage());
+                jtfGrupoUsuario.setText("");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Usuario Falhou .\n" + ex.getMessage());
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "O campo deve conter ao menos 1 caractere.");
         }
     }//GEN-LAST:event_btnCadastrarActionPerformed

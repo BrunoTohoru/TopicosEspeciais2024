@@ -13,6 +13,7 @@ import java.util.Arrays;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import modelo.Usuario;
+
 public class UsuarioCadastrar extends javax.swing.JFrame {
 
     /**
@@ -148,23 +149,23 @@ public class UsuarioCadastrar extends javax.swing.JFrame {
                     user.setNome(jtfNome.getText());
                     user.setEmail(jtfEmail.getText());
                     user.setSenha(new String(jpfSenha.getPassword()));
-                    try{
+                    try {
                         UsuarioDao usuarioMethods = new UsuarioDao();
                         usuarioMethods.inserir(user);
                         JOptionPane.showMessageDialog(this, "Usuario Cadastrado");
                         jtfNome.setText("");
                         jtfEmail.setText("");
                         jpfSenha.setText("");
-                    } catch (Exception ex){
+                    } catch (Exception ex) {
                         JOptionPane.showMessageDialog(this, "Usuario Falhou .\n" + ex.getMessage());
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(null, "O campo Senha deve conter ao menos 1 caractere.");
                 }
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "O campo Email deve conter ao menos 1 caractere.");
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "O campo Nome deve conter ao menos 1 caractere.");
         }
     }//GEN-LAST:event_jButtonCadastrarActionPerformed

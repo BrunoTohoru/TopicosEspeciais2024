@@ -9,6 +9,7 @@ package modelo;
  * @author Douglas Sugano
  */
 public class Produto {
+
     private int id;
     private String nomeProduto;
     private String unidadeDeMedida;
@@ -20,7 +21,7 @@ public class Produto {
 
     public void setDataCadastro(String dataCadastro) {
         this.dataCadastro = dataCadastro;
-    }    
+    }
 
     public int getId() {
         return id;
@@ -45,5 +46,5 @@ public class Produto {
     public void setUnidadeDeMedida(String unidadeDeMedida) {
         this.unidadeDeMedida = unidadeDeMedida;
     }
-    
+
 }

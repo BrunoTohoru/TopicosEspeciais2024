@@ -15,6 +15,7 @@ import modelo.Produto;
  * @author Bruno
  */
 public class ProdutoDao {
+
     public void inserir(Produto u) throws Exception {
         String sql = "INSERT INTO produto (nome,unidadeDeMedida) values(?,?)";
         Connection conexao = Conexao.getConexao();
@@ -56,5 +57,17 @@ public class ProdutoDao {
             throw e;
         }
         return lista;
+    }
+
+    public void excluir(int id) throws Exception {
+        String sql = "DELETE FROM produto WHERE id = ?";
+        Connection conexao = Conexao.getConexao();
+        try (PreparedStatement ps = conexao.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }

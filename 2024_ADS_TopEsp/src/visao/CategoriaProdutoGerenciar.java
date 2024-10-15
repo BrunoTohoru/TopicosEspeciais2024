@@ -23,7 +23,8 @@ public class CategoriaProdutoGerenciar extends javax.swing.JFrame {
         initComponents();
         jtfPesquisarKeyReleased(null);
     }
-    private void cadastrar(){
+
+    private void cadastrar() {
         CategoriaProdutoCadastrar c = new CategoriaProdutoCadastrar();
         c.setVisible(true);
     }
@@ -76,6 +77,11 @@ public class CategoriaProdutoGerenciar extends javax.swing.JFrame {
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/excluir.png"))); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/alterar.png"))); // NOI18N
         btnAlterar.setText("Alterar");
@@ -138,7 +144,7 @@ public class CategoriaProdutoGerenciar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jtfPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfPesquisarActionPerformed
-         
+
     }//GEN-LAST:event_jtfPesquisarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
@@ -146,30 +152,51 @@ public class CategoriaProdutoGerenciar extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void jtfPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPesquisarKeyReleased
-        String campoPesquisa = jtfPesquisar.getText(); 
-        
+        String campoPesquisa = jtfPesquisar.getText();
+
         DefaultTableModel modelo = (DefaultTableModel) jtbCatProdutos.getModel();
         modelo.setNumRows(0); // limpa os campos
-        
-        try{
+
+        try {
             ProdutoCategoriaDao dao = new ProdutoCategoriaDao();
             List<ProdutoCategoria> lista = dao.buscar(campoPesquisa);
-            
-            for (ProdutoCategoria produto : lista){
+
+            for (ProdutoCategoria produto : lista) {
                 String[] linhadaTabela = {
                     String.valueOf(produto.getId()),
                     produto.getNomeCategoria()
                 };
                 modelo.addRow(linhadaTabela); // adiciona uma linha na tabela
-                
+
             }
-            
-        } catch (Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Erro ao pesquisar: " + e.getMessage());
-            
-        }        
+
+        }
     }//GEN-LAST:event_jtfPesquisarKeyReleased
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        Integer linhaSelecionada = jtbCatProdutos.getSelectedRow();
+        if (!(linhaSelecionada == -1)) {
+            int opcao = JOptionPane.showConfirmDialog(this, "Confirma exclusão?", "Excluir", JOptionPane.YES_NO_OPTION);
+            if (opcao == JOptionPane.YES_OPTION) {
+                int id = Integer.parseInt(jtbCatProdutos.getModel().getValueAt(linhaSelecionada, 0).toString());
+                try {
+                    ProdutoCategoriaDao dao = new ProdutoCategoriaDao();
+                    dao.excluir(id);
+                    DefaultTableModel modelo = (DefaultTableModel) jtbCatProdutos.getModel();
+                    modelo.removeRow(linhaSelecionada);
+                    JOptionPane.showMessageDialog(this, "Registro excluido com sucesso!");
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Você deve selecionar um registro para excluir.");
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
